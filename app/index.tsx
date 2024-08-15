@@ -1,12 +1,26 @@
-import { Text, View } from "react-native";
-import { Link } from "expo-router";
+import { Text, View, SafeAreaView } from "react-native";
+import Button from "@/components/Button";
+import Moon from "@/icons/Moon";
 
 export default function Index() {
   return (
-    <View className="flex h-full w-full items-center justify-center bg-[#fafafa]">
-      <Text className="text-center font-inter text-4xl">Why hello there.</Text>
-      <Text className="font-space">Welcome to lucid</Text>
-      <Link href="/dashboard">dashboard</Link>
-    </View>
+    <SafeAreaView>
+      <View className="flex h-full justify-center p-4 w-full bg-[#fafafa]">
+        <View className="mb-8">
+          <Moon size={80} color='#212121' />
+        </View>
+        <View>
+          <Text className="font-inter text-4xl font-medium">Why hello there.</Text>
+          <Text className="font-inter text-2xl font-medium">Welcome to Lucid</Text>
+        </View>
+        <View className="mt-8">
+          <Text className="font-space font-medium">Lucid helps you gain clarity and understanding of your dreams, empowering you to explore your subconscious mind and uncover hidden insights in your waking day.</Text>
+        </View>
+        <View className="flex items-center flex-row mt-8">
+          <Button styles="mr-4" href="/dashboard">{`Let's Get Started ->`}</Button>
+          <Button variant="secondary">Login Instead</Button>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
