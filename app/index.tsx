@@ -1,13 +1,13 @@
 import { Text, View, SafeAreaView } from "react-native";
 import Button from "@/components/Button";
-import Moon from "@/icons/Moon";
 
 export default function Index() {
   return (
+    <>
     <SafeAreaView>
-      <View className="flex h-full justify-center p-4 w-full bg-[#fafafa]">
+      <View className="flex h-full justify-center p-4 w-full">
         <View className="mb-8">
-          <Moon size={80} color='#212121' />
+          {/* MOON LOGO */}
         </View>
         <View>
           <Text className="font-inter text-4xl font-medium">Why hello there.</Text>
@@ -22,5 +22,6 @@ export default function Index() {
         </View>
       </View>
     </SafeAreaView>
+    </>
   );
 }
