@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import Chip from "./Chip";
+import { Chip } from "@/components/ui";
 import DreamCardModal from "./DreamCardModal";
 import truncateText from "@/utils/truncateText";
 import { useState } from "react";

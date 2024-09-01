@@ -4,7 +4,7 @@ import {
 } from "react-native";
 import CreateDreamModal from "./CreateDreamModal";
 import { useRef } from "react";
-import Button from "./Button";
+import { Button } from "@/components/ui";
 import { Pen } from "lucide-react-native";
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 

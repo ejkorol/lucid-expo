@@ -1,5 +1,5 @@
 import { Text, View, SafeAreaView } from "react-native";
-import Button from "@/components/Button";
+import { Button } from "@/components/ui";
 
 export default function Index() {
   return (
@@ -17,8 +17,8 @@ export default function Index() {
           <Text className="font-space font-medium">Lucid helps you gain clarity and understanding of your dreams, empowering you to explore your subconscious mind and uncover hidden insights in your waking day.</Text>
         </View>
         <View className="flex items-center flex-row mt-8">
-          <Button styles="mr-4" href="/dashboard">{`Let's Get Started ->`}</Button>
-          <Button variant="secondary">Login Instead</Button>
+          <Button styles="mr-4" href="/auth/signup">{`Let's Get Started ->`}</Button>
+          <Button variant="secondary" href="/auth/signin">Login Instead</Button>
         </View>
       </View>
     </SafeAreaView>

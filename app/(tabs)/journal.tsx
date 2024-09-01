@@ -30,7 +30,7 @@ const Journal = () => {
           {entries.map((entry) => (
             <View
               key={entry.id}
-              className="mb-6 border-b pb-6 border-solid border-[#bdbdbd]"
+              className="mb-6"
             >
               <View className="flex flex-row justify-between">
                 <Text className="font-inter text-xl">

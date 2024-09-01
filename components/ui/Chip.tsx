@@ -39,4 +39,4 @@ const Chip = ({
   );
 }
 
-export default Chip;
+export { Chip };

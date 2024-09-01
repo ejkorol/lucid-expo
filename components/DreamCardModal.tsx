@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   Image
 } from "react-native";
-import Chip from "./Chip";
+import { Chip } from "@/components/ui";
 
 interface DreamCardModalProps {
   modalVisible: boolean;

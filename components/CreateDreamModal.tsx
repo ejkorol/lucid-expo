@@ -4,7 +4,7 @@ import {
   TextInput
 } from 'react-native';
 import { ArrowLeft } from 'lucide-react-native';
-import Button from './Button';
+import { Button } from '@/components/ui';
 import React, { forwardRef, useMemo, useCallback } from 'react';
 import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 
