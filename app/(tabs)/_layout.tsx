@@ -1,4 +1,34 @@
 import { Tabs } from "expo-router";
+import {
+  BedSingle,
+  Scroll,
+  Search,
+  Mailbox,
+  CircleUserRound
+} from "lucide-react-native";
+
+const tabs = [
+  {
+    name: "dashboard",
+    icon: BedSingle
+  },
+  {
+    name: "journal",
+    icon: Scroll
+  },
+  {
+    name: "symbols",
+    icon: Search
+  },
+  {
+    name: "messages",
+    icon: Mailbox
+  },
+  {
+    name: "settings",
+    icon: CircleUserRound
+  }
+]
 
 const TabsLayout = () => {
   return (
@@ -10,9 +40,7 @@ const TabsLayout = () => {
           tabBarInactiveTintColor: '#BDBDBD',
           tabBarStyle: {
             backgroundColor: '#e0e0e0',
-            borderRadius: 24,
-            bottom: 20,
-            width: '90%',
+            borderRadius: 16,
             alignItems: 'center',
             alignContent: 'center',
             marginLeft: 'auto',
@@ -20,9 +48,16 @@ const TabsLayout = () => {
           }
         }}
       >
-        <Tabs.Screen
-          name="dashboard"
-        />
+        {tabs.map(({ name, icon: Icon }) => (
+          <Tabs.Screen
+            key={name}
+            name={name}
+            options={{
+              tabBarShowLabel: false,
+              tabBarIcon: ({ color }) => <Icon size={24} color={color} />
+            }}
+          />
+        ))}
       </Tabs>
     </>
   );
