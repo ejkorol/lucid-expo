@@ -37,7 +37,8 @@
             "./assets/fonts/space-mono-bold.ttf"
           ]
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
