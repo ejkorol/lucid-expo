@@ -7,6 +7,7 @@ type Radius = 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
 interface ButtonProps {
   children?: string | React.ReactElement;
+  disabled?: boolean;
   size?: Size;
   styles?: string;
   variant?: Variant;
@@ -62,7 +63,8 @@ const Button = ({
   href,
   onPress,
   radius = 'full',
-  isIconOnly = false
+  isIconOnly = false,
+  disabled = false
 }: ButtonProps) => {
   const sizeClass = SIZE_CLASSES[size];
   const variantClass = VARIANT_CLASSES[variant];
@@ -71,6 +73,7 @@ const Button = ({
 
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={href ? () => handlePress(href) : onPress}
       className={`${radiusClass} ${sizeClass} ${variantClass.container} ${variantClass.border} ${styles} ${isIconOnlyClass}`}
     >
