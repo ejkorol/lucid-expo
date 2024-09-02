@@ -1,7 +1,22 @@
 import { Text, View, SafeAreaView } from "react-native";
 import { Button } from "@/components/ui";
+import * as SecureStore from "expo-secure-store"
+import { useEffect } from "react";
 
 export default function Index() {
+
+  // For DEV only
+  useEffect(() => {
+    const clearToken = async () => {
+      try {
+        await SecureStore.deleteItemAsync('token');
+      } catch(e) {
+        console.error(`An error occured clearing the token: ${e}`)
+      };
+    };
+    clearToken();
+  }, []);
+
   return (
     <>
     <SafeAreaView>
@@ -17,7 +32,7 @@ export default function Index() {
           <Text className="font-space font-medium">Lucid helps you gain clarity and understanding of your dreams, empowering you to explore your subconscious mind and uncover hidden insights in your waking day.</Text>
         </View>
         <View className="flex items-center flex-row mt-8">
-          <Button styles="mr-4" href="/auth/signup">{`Let's Get Started ->`}</Button>
+          <Button styles="mr-4" href="/dashboard">{`Let's Get Started ->`}</Button>
           <Button variant="secondary" href="/auth/signin">Login Instead</Button>
         </View>
       </View>

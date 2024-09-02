@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Tabs, Redirect } from "expo-router";
 import {
   BedSingle,
   Scroll,
@@ -6,6 +6,8 @@ import {
   Mailbox,
   CircleUserRound
 } from "lucide-react-native";
+import { useAuth } from "@/hooks/useAuth";
+import { View, Text } from "react-native";
 
 const tabs = [
   {
@@ -31,6 +33,23 @@ const tabs = [
 ]
 
 const TabsLayout = () => {
+
+  const { isLoading, isAuthenticated } = useAuth();
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text>
+          Loading...
+        </Text>
+      </View>
+    );
+  };
+
+  if (!isAuthenticated) {
+    return <Redirect href="/" />
+  };
+
   return (
     <>
       <Tabs
