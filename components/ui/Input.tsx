@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   View,
   Text,
@@ -15,7 +16,8 @@ interface InputProps {
   radius?: Radius;
   styles?: string;
   size?: Size;
-  type?: Type
+  type?: Type;
+  onChange?: (text: string) => void;
 };
 
 const VARIANT_CLASSES: Record<Variant, { container: string; text: string }>= {
@@ -43,8 +45,19 @@ const Input = ({
   radius = 'md',
   styles = '',
   size = 'md',
-  type = 'text'
+  type = 'text',
+  onChange
 }: InputProps) => {
+
+  const [value, setValue] = useState<string>('');
+
+  const handleChange = (text: string) => {
+    setValue(text);
+    if (onChange) {
+      onChange(text);
+    };
+  };
+
   const variantClass = VARIANT_CLASSES[variant];
   const radiusClass = RADIUS_CLASSES[radius];
   const sizeClass = SIZE_CLASSES[size];
@@ -52,10 +65,12 @@ const Input = ({
   return (
     <View>
       <TextInput
+        value={value}
         className={`${variantClass.container} ${variantClass.text} ${radiusClass} ${sizeClass} ${styles}`}
         placeholder={placeholder}
         placeholderTextColor="#212121"
         secureTextEntry={type === 'password'}
+        onChangeText={handleChange}
       />
     </View>
   );
