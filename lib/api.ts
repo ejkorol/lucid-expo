@@ -79,10 +79,30 @@ class Api {
     };
   };
 
+  public async getMbtis(): Promise<IMbti[] | null> {
+    try {
+      const route = `/api/v1/mbti`;
+      const data = await this.fetchFromApi(route, {
+        method: "GET"
+      });
+
+      return data || null;
+    } catch(e) {
+      console.error(`Failed to get MBTIs: ${e}`)
+      return null;
+    };
+  };
+
 };
 
 interface IVerify {
   status: boolean;
+};
+
+interface IMbti {
+  id: number;
+  type: string;
+  archetype: string;
 };
 
 export default new Api()
