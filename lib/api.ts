@@ -93,6 +93,63 @@ class Api {
     };
   };
 
+  public async getCountries(): Promise<ICountry[] | null> {
+    try {
+      const route = `/api/v1/locations/countries`;
+      const data = await this.fetchFromApi(route, {
+        method: "GET"
+      });
+
+      return data;
+    } catch(e) {
+      console.error(`Failed to get countries: ${e}`);
+      return null;
+    };
+  };
+
+  public async getStates(countryCode: string): Promise<IState[] | null> {
+    try {
+      const route = `/api/v1/locations/states/${countryCode}`;
+      const data = await this.fetchFromApi(route, {
+        method: "GET"
+      });
+
+      return data;
+    } catch(e) {
+      console.error(`Failed to get states: ${e}`);
+      return null;
+    };
+  };
+
+  public async getCities(countryCode: string, stateCode: string): Promise<ICity[] | null> {
+    try {
+      const route = `/api/v1/locations/cities/${countryCode}/${stateCode}`;
+      const data = await this.fetchFromApi(route, {
+        method: "GET"
+      });
+
+      return data;
+    } catch(e) {
+      console.error(`Failed to get cities: ${e}`);
+      return null;
+    };
+  };
+
+};
+
+interface ICountry {
+  value: string;
+  displayValue: string;
+};
+
+interface IState {
+  value: string;
+  displayValue: string;
+};
+
+interface ICity {
+  value: string;
+  displayValue: string;
 };
 
 interface IVerify {
