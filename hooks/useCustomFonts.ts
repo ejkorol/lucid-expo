@@ -8,7 +8,8 @@ export const useCustomFonts = () => {
 
   const [fontsLoaded, error] = useFonts({
     'inter': require('../assets/fonts/inter-variable.ttf'),
-    'spaceMono': require('../assets/fonts/space-mono-regular.ttf')
+    'spaceMono': require('../assets/fonts/space-mono-regular.ttf'),
+    'robotoMono': require('../assets/fonts/roboto-mono.ttf')
   })
 
   useEffect(() => {
