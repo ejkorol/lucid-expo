@@ -3,13 +3,15 @@ import {
   View,
   Text
 } from "react-native";
-import { ChevronRight } from "lucide-react-native";
+import { ChevronRight, Dot } from "lucide-react-native";
 import { Chip } from "../ui";
 
 type Variant = 'ghost' | 'light';
+type Alert = 'new' | undefined;
 
 interface DreamListItemProps {
-  variant?: Variant
+  variant?: Variant,
+  alert?: Alert
 };
 
 const VARIANT_STYLES = {
@@ -21,20 +23,29 @@ const VARIANT_STYLES = {
   }
 };
 
+const ALERT_STYLES = {
+  new: '#00E676'
+};
+
 const BASE_STYLES = {
   container: 'flex w-full'
 };
 
 const DreamListItem = ({
-  variant = 'light'
+  variant = 'light',
+  alert = undefined
 }: DreamListItemProps) => {
 
   const variantStyles = VARIANT_STYLES[variant];
+  const alertStyle = alert ? ALERT_STYLES[alert] : '';
 
   return (
     <TouchableOpacity className={`${BASE_STYLES.container} ${variantStyles.container}`}>
       <View>
         <View className="flex flex-row items-center justify-between">
+          {alert && (
+            <Dot className="absolute left-0 ml-[-28]" size={32} color={`${alertStyle}`} />
+          )}
           <Text className="font-inter font-medium text-xl text-[#212121] tracking-tighter">
             Lovers Long Ago
           </Text>
