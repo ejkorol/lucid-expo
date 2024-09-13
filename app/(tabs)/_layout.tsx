@@ -1,11 +1,12 @@
-import { Tabs, Redirect } from "expo-router";
+import * as Haptics from "expo-haptics";
+import { View } from "react-native";
+import { BlurView } from "expo-blur";
+import { Tabs } from "expo-router";
 import {
   LayoutDashboard,
   Library,
   CircleUserRound
 } from "lucide-react-native";
-import { useAuth } from "@/hooks/useAuth";
-import { View, Text } from "react-native";
 
 const tabs = [
   {
@@ -20,40 +21,33 @@ const tabs = [
     name: "settings",
     icon: CircleUserRound
   }
-]
+];
 
 const TabsLayout = () => {
-
-  const { isLoading, isAuthenticated } = useAuth();
-
-  if (isLoading) {
-    return (
-      <View>
-        <Text>
-          Loading...
-        </Text>
-      </View>
-    );
-  };
-
-  if (!isAuthenticated) {
-    return <Redirect href="/" />
-  };
 
   return (
     <>
       <Tabs
+        sceneContainerStyle={{
+          backgroundColor: '#ffffff'
+        }}
         screenOptions={{
+          tabBarBackground: () => (<BlurView tint="extraLight" className="bg-[#ffffff]"/>),
           headerShown: false,
-          tabBarActiveTintColor: '#212121',
-          tabBarInactiveTintColor: '#BDBDBD',
+          tabBarActiveTintColor: '#fafafa',
+          tabBarInactiveTintColor: '#bdbdbd',
           tabBarStyle: {
-            backgroundColor: '#e0e0e0',
-            borderRadius: 16,
+            position: 'absolute',
             alignItems: 'center',
             alignContent: 'center',
-            marginLeft: 'auto',
-            marginRight: 'auto'
+            justifyContent: 'center',
+            backgroundColor: '#eeeeee',
+            borderRadius: 100,
+            marginLeft: 20,
+            paddingTop: 24,
+            width: 250,
+            marginRight: 20,
+            marginBottom: 32
           }
         }}
       >
@@ -62,8 +56,20 @@ const TabsLayout = () => {
             key={name}
             name={name}
             options={{
+              title: name,
               tabBarShowLabel: false,
-              tabBarIcon: ({ color }) => <Icon size={24} color={color} />
+              tabBarIcon: ({ focused, color }) => (
+                <View
+                  onTouchEnd={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
+                  style={{
+                    backgroundColor: focused ? '#2962FF' : '#eeeeee',
+                    padding: 12,
+                    borderRadius: 50
+                  }}
+                >
+                  <Icon size={24} color={color} />
+                </View>
+              )
             }}
           />
         ))}
