@@ -41,7 +41,7 @@ const RADIUS_STYLES = {
 
 const VARIANT_STYLES = {
   primary: 'bg-primary text-white',
-  ghost: 'bg-transparent text-primary'
+  ghost: 'bg-[#ffffff] text-primary'
 }
 
 const Button = ({
