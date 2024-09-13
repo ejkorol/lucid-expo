@@ -2,7 +2,6 @@
   "name": "lucid-expo",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -42,7 +41,9 @@
     "react-native-web": "~0.19.10",
     "tailwind-merge": "^2.5.2",
     "@react-native-community/datetimepicker": "8.0.1",
-    "@react-native-picker/picker": "2.7.5"
+    "@react-native-picker/picker": "2.7.5",
+    "expo-blur": "~13.0.2",
+    "expo-haptics": "~13.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
