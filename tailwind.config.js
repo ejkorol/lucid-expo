@@ -9,6 +9,9 @@ module.exports = {
         roboto: ['robotoMono', 'monospace']
       }
     },
+    colors: {
+      'primary': '#2962FF'
+    }
   },
   plugins: [],
 }
