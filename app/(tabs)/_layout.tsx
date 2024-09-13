@@ -1,9 +1,7 @@
 import { Tabs, Redirect } from "expo-router";
 import {
-  BedSingle,
-  Scroll,
-  Search,
-  Mailbox,
+  LayoutDashboard,
+  Library,
   CircleUserRound
 } from "lucide-react-native";
 import { useAuth } from "@/hooks/useAuth";
@@ -12,19 +10,11 @@ import { View, Text } from "react-native";
 const tabs = [
   {
     name: "dashboard",
-    icon: BedSingle
+    icon: LayoutDashboard
   },
   {
-    name: "journal",
-    icon: Scroll
-  },
-  {
-    name: "symbols",
-    icon: Search
-  },
-  {
-    name: "messages",
-    icon: Mailbox
+    name: "library",
+    icon: Library
   },
   {
     name: "settings",

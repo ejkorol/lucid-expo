@@ -137,17 +137,17 @@ class Api {
 
 };
 
-interface ICountry {
+export interface ICountry {
   value: string;
   displayValue: string;
 };
 
-interface IState {
+export interface IState {
   value: string;
   displayValue: string;
 };
 
-interface ICity {
+export interface ICity {
   value: string;
   displayValue: string;
 };

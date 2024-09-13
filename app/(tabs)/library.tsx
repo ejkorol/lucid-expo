@@ -1,19 +1,19 @@
 import {
-  View, 
-  Text, 
-  SafeAreaView 
+  View,
+  Text,
+  SafeAreaView
 } from "react-native";
 
-const Dashboard = () => {
+const Symbols = () => {
   return (
     <SafeAreaView>
       <View>
         <Text className="text-4xl font-inter">
-          Dashboard
+          Library
         </Text>
       </View>
     </SafeAreaView>
   );
 }
 
-export default Dashboard;
+export default Symbols;
