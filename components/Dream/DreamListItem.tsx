@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics";
 import {
   TouchableOpacity,
   View,
@@ -40,7 +41,7 @@ const DreamListItem = ({
   const alertStyle = alert ? ALERT_STYLES[alert] : '';
 
   return (
-    <TouchableOpacity className={`${BASE_STYLES.container} ${variantStyles.container}`}>
+    <TouchableOpacity onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)} className={`${BASE_STYLES.container} ${variantStyles.container}`}>
       <View>
         <View className="flex flex-row items-center justify-between">
           {alert && (
