@@ -7,6 +7,7 @@ export default function Index() {
       <View>
         <Text>src</Text>
         <Link href="/dashboard">dashboard</Link>
+        <Link href="/auth/forgot-password">Forgot password?</Link>
       </View>
     </SafeAreaView>
   );
