@@ -10,10 +10,6 @@ const Library = () => {
           <Label styles="mb-4">A</Label>
           <SymbolListItem />
           <Divider />
-          <SymbolListItem />
-          <Divider />
-          <SymbolListItem />
-          <Divider />
         </View>
       </View>
     </SafeAreaView>
