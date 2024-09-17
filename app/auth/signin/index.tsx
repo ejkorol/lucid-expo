@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { SafeAreaView, View, KeyboardAvoidingView, Text } from "react-native";
 import { Image } from "expo-image";
@@ -6,6 +7,7 @@ import moonLogo from "@/assets/images/moon-logo-blue.svg";
 import { Link } from "expo-router";
 
 const Signin = () => {
+  const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -63,7 +65,11 @@ const Signin = () => {
                 Login
               </Button>
               <View className="mt-4">
-                <Button variant="ghost" color="none">
+                <Button
+                  variant="ghost"
+                  color="none"
+                  onClick={() => router.push("/auth/signup")}
+                >
                   <View className="flex flex-row items-center">
                     <Text className="font-roboto text-xs tracking-tight mr-4 text-[#BDBDBD]">
                       Need an account?
