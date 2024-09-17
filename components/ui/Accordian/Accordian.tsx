@@ -59,7 +59,7 @@ const Accordian = ({
         </Animated.View>
       </Pressable>
       <Animated.View
-        className="mt-4"
+        className="mt-4 w-full"
         style={{ height: animatedHeight, overflow: 'hidden' }}
       >
         {children}
