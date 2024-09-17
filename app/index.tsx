@@ -8,6 +8,7 @@ export default function Index() {
         <Text>src</Text>
         <Link href="/dashboard">dashboard</Link>
         <Link href="/auth/forgot-password">Forgot password?</Link>
+        <Link href="/auth/signin">Sign in</Link>
       </View>
     </SafeAreaView>
   );
