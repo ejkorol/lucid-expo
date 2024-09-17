@@ -1,81 +1,45 @@
-import * as Haptics from "expo-haptics";
-import { View } from "react-native";
-import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
-import {
-  LayoutDashboard,
-  Library,
-  CircleUserRound
-} from "lucide-react-native";
-
-const tabs = [
-  {
-    name: "dashboard",
-    icon: LayoutDashboard
-  },
-  {
-    name: "library",
-    icon: Library
-  },
-  {
-    name: "settings",
-    icon: CircleUserRound
-  }
-];
+import { LayoutDashboard, Library, Settings } from "lucide-react-native";
 
 const TabsLayout = () => {
-
   return (
-    <>
-      <Tabs
-        sceneContainerStyle={{
-          backgroundColor: '#ffffff'
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Tabs.Screen
+        name="dashboard"
+        options={{
+          title: "Dashboard",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ size, color }) => (
+            <LayoutDashboard size={size} color={color} />
+          ),
         }}
-        screenOptions={{
-          tabBarBackground: () => (<BlurView tint="extraLight" className="bg-[#ffffff]"/>),
-          headerShown: false,
-          tabBarActiveTintColor: '#fafafa',
-          tabBarInactiveTintColor: '#bdbdbd',
-          tabBarStyle: {
-            position: 'absolute',
-            alignItems: 'center',
-            alignContent: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#eeeeee',
-            borderRadius: 100,
-            marginLeft: 20,
-            paddingTop: 24,
-            width: 250,
-            marginRight: 20,
-            marginBottom: 32
-          }
+      />
+      <Tabs.Screen
+        name="library"
+        options={{
+          title: "Library",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ size, color }) => (
+            <Library size={size} color={color} />
+          ),
         }}
-      >
-        {tabs.map(({ name, icon: Icon }) => (
-          <Tabs.Screen
-            key={name}
-            name={name}
-            options={{
-              title: name,
-              tabBarShowLabel: false,
-              tabBarIcon: ({ focused, color }) => (
-                <View
-                  onTouchEnd={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
-                  style={{
-                    backgroundColor: focused ? '#2962FF' : '#eeeeee',
-                    padding: 12,
-                    borderRadius: 50
-                  }}
-                >
-                  <Icon size={24} color={color} />
-                </View>
-              )
-            }}
-          />
-        ))}
-      </Tabs>
-    </>
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ size, color }) => (
+            <Settings size={size} color={color} />
+          ),
+        }}
+      />
+    </Tabs>
   );
-}
+};
 
 export default TabsLayout;
