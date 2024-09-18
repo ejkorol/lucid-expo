@@ -13,7 +13,7 @@ const Signin = () => {
 
   return (
     <SafeAreaView className="relative bg-[#ffffff] h-full">
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView className="flex-1" behavior="padding">
         <View className="px-6 h-full">
           <View className="flex flex-1 items-center justify-center">
             <Image
