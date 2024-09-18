@@ -1,6 +1,7 @@
+import * as Haptics from "expo-haptics";
 import { TouchableOpacity, View, Text } from "react-native";
 
-type Color = "primary" | "none";
+type Color = "primary" | "secondary" | "none";
 type Size = "sm" | "md" | "lg";
 type Radius = "sm" | "md" | "lg" | "full";
 type Variant = "primary" | "ghost";
@@ -24,6 +25,10 @@ const COLOR_STYLES = {
   primary: {
     container: "bg-primary",
     text: "font-roboto tracking-tighter font-medium text-[#ffffff]",
+  },
+  secondary: {
+    container: "bg-[#ffffff] border-[1.6px] border-[#2962FF]",
+    text: "font-roboto tracking-tighter font-medium text-[#2962FF]",
   },
   none: {
     container: "bg-[#ffffff]",
@@ -64,10 +69,16 @@ const Button = ({
   const radiusStyles = RADIUS_STYLES[radius];
   const variantStyles = VARIANT_STYLES[variant];
 
+  const handleClick = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    if (onClick) onClick();
+  };
+
   switch (isIconOnly) {
     case true:
       return (
         <TouchableOpacity
+          onPress={handleClick}
           className={`${colorStyles.container} ${variantStyles} ${radiusStyles} ${styles}`}
         >
           <View>{children}</View>
@@ -77,7 +88,7 @@ const Button = ({
     default:
       return (
         <TouchableOpacity
-          onPress={onClick !== undefined ? onClick : undefined}
+          onPress={handleClick}
           className={`${BASE_STYLES.container} ${colorStyles.container} ${sizeStyles} ${radiusStyles} ${styles}`}
         >
           <Text className={`${colorStyles.text}`}>{children}</Text>
