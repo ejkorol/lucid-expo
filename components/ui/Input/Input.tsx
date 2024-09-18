@@ -63,16 +63,16 @@ const Input = ({
     case "password":
       return (
         <View
-          className={`${BASE_STYLE.container} ${radiusStyle} ${style} items-center flex-row justify-between`}
+          className={`${BASE_STYLE.container} ${radiusStyle} ${style} relative items-center flex-row justify-between`}
         >
           <TextInput
-            className={`${sizeStyles}`}
+            className={`${sizeStyles} w-full`}
             value={value}
             onChangeText={onChangeText}
             placeholder={placeholder}
             secureTextEntry={!visible}
           />
-          <View className="pr-2">
+          <View className="absolute right-0 pr-2">
             {visible ? (
               <TouchableOpacity onPress={() => setVisible(false)}>
                 <EyeOff size={24} color="#BDBDBD" />
