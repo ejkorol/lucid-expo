@@ -3,10 +3,11 @@ import { useRouter } from "expo-router";
 import { KeyboardAvoidingView, SafeAreaView, View, Text } from "react-native";
 import { Label, Input, Button } from "@/components/ui";
 
-const Signup = () => {
+const BirthDetails = () => {
   const router = useRouter();
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   return (
     <SafeAreaView className="bg-[#ffffff] h-full">
@@ -16,34 +17,50 @@ const Signup = () => {
           <View className="bottom-0">
             <View>
               <Label styles="mb-2" color="primary">
-                Step 1
+                Step 2
               </Label>
               <Text className="font-medium text-3xl tracking-tighter text-[#212121]">
-                Let's start with your name
+                You're doing great,
+              </Text>
+              <Text className="font-medium text-3xl tracking-tighter text-[#212121]">
+                Jane
               </Text>
               <Text className="mt-4 text-xs text-[#757575]">
-                It'll be useful to get to know a little bit about each other
+                You’ll need an email to log back in.
               </Text>
             </View>
             <View className="my-10">
               <View>
                 <Label color="dark" styles="mb-2">
-                  First name*
+                  Email*
                 </Label>
                 <Input
-                  placeholder="Jane"
-                  value={firstName}
-                  onChangeText={setFirstName}
+                  placeholder="janedoe@example.com"
+                  value={email}
+                  onChangeText={setEmail}
                 />
               </View>
               <View className="mt-4">
                 <Label color="dark" styles="mb-2">
-                  Last name
+                  Password*
                 </Label>
                 <Input
-                  placeholder="Doe"
-                  value={lastName}
-                  onChangeText={setLastName}
+                  placeholder="* * * * * * * *"
+                  type="password"
+                  value={password}
+                  onChangeText={setPassword}
+                />
+              </View>
+
+              <View className="mt-4">
+                <Label color="dark" styles="mb-2">
+                  Confirm Password*
+                </Label>
+                <Input
+                  placeholder="* * * * * * * *"
+                  type="password"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
                 />
               </View>
             </View>
@@ -51,26 +68,10 @@ const Signup = () => {
               styles="mt-8"
               radius="full"
               size="lg"
-              onClick={() => router.push("/auth/signup/birth-details")}
+              onClick={() => router.push("/auth/signup/credentials")}
             >
               Continue
             </Button>
-            <View className="mt-4">
-              <Button
-                variant="ghost"
-                color="none"
-                onClick={() => router.push("/auth/signin")}
-              >
-                <View className="flex flex-row items-center">
-                  <Text className="font-roboto text-xs tracking-tight mr-4 text-[#BDBDBD]">
-                    Have an account?
-                  </Text>
-                  <Text className="font-roboto text-xs tracking-tight text-[#2962FF]">
-                    Login Instead
-                  </Text>
-                </View>
-              </Button>
-            </View>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -78,4 +79,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default BirthDetails;
