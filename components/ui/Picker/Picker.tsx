@@ -203,8 +203,8 @@ const Picker = ({
                   setSelectedItem(item);
                 }}
               >
-                {items.map((item) => (
-                  <NativePicker.Item value={item} label={item} />
+                {items.map((item, idx) => (
+                  <NativePicker.Item key={idx} value={item} label={item} />
                 ))}
               </NativePicker>
             </BottomSheetView>
