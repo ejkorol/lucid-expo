@@ -10,6 +10,7 @@ import DatePicker from "react-native-date-picker";
 import { Picker as NativePicker } from "@react-native-picker/picker";
 import { Pressable, View, Text, Button } from "react-native";
 import { Calendar, Clock, ChevronDown } from "lucide-react-native";
+import { format } from "date-fns";
 
 type Type = "date" | "time" | "picker";
 
@@ -99,7 +100,9 @@ const Picker = ({
                   value ? `${BASE_STYLES.selected}` : `${BASE_STYLES.text}`
                 }
               >
-                {value instanceof Date ? value.toISOString() : placeholder}
+                {value instanceof Date
+                  ? format(value, "MMMM do, yyyy")
+                  : placeholder}
               </Text>
             </Pressable>
             <View className="absolute right-4">
@@ -135,7 +138,7 @@ const Picker = ({
                   value ? `${BASE_STYLES.selected}` : `${BASE_STYLES.text}`
                 }
               >
-                {value instanceof Date ? value.toISOString() : placeholder}
+                {value instanceof Date ? format(value, "hh:mm b") : placeholder}
               </Text>
             </Pressable>
             <View className="absolute right-4">
