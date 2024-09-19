@@ -5,9 +5,13 @@ module.exports = {
     extend: {
       fontFamily: {
         inter: ['inter', 'sans-serif'],
-        space: ['spaceMono', 'serif']
+        space: ['spaceMono', 'serif'],
+        roboto: ['robotoMono', 'monospace']
       }
     },
+    colors: {
+      'primary': '#2962FF'
+    }
   },
   plugins: [],
 }
