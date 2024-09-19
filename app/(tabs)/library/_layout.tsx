@@ -30,6 +30,19 @@ const LibraryLayout = () => {
           ),
         }}
       />
+
+      <Stack.Screen
+        name="symbol/[symbolId]"
+        options={{
+          headerTitle: "",
+          headerBackTitle: "Symbols",
+          headerTransparent: true,
+          headerBlurEffect: "regular",
+          headerStyle: {
+            backgroundColor: "#ffffff",
+          },
+        }}
+      />
     </Stack>
   );
 };
