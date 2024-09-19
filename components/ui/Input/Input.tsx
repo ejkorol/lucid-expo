@@ -19,6 +19,7 @@ interface InputProps {
 const BASE_STYLE = {
   container: "bg-[#EEEEEE] border-[1px] border-[#E0E0E0]",
   text: "font-inter text-base text-[#BDBDBD]",
+  active: "bg-[#EEEEEE] border-[1px] border-[#2962FF]",
 };
 
 const SIZE_STYLE = {
@@ -43,6 +44,7 @@ const Input = ({
   type = "text",
 }: InputProps) => {
   const [visible, setVisible] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const sizeStyles = SIZE_STYLE[size];
   const radiusStyle = RADIUS_STYLE[radius];
@@ -50,11 +52,19 @@ const Input = ({
   switch (type) {
     case "text":
       return (
-        <View className={`${BASE_STYLE.container} ${radiusStyle} ${style}`}>
+        <View
+          className={
+            isFocused
+              ? `${BASE_STYLE.active} ${radiusStyle} ${style}`
+              : `${BASE_STYLE.container} ${radiusStyle} ${style}`
+          }
+        >
           <TextInput
             className={`${sizeStyles}`}
             value={value}
             onChangeText={onChangeText}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             placeholder={placeholder}
           />
         </View>
@@ -63,12 +73,18 @@ const Input = ({
     case "password":
       return (
         <View
-          className={`${BASE_STYLE.container} ${radiusStyle} ${style} relative items-center flex-row justify-between`}
+          className={
+            isFocused
+              ? `${BASE_STYLE.active} ${radiusStyle} ${style} relative items-center flex-row justify-between`
+              : `${BASE_STYLE.container} ${radiusStyle} ${style} relative items-center flex-row justify-between`
+          }
         >
           <TextInput
             className={`${sizeStyles} w-full`}
             value={value}
             onChangeText={onChangeText}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             placeholder={placeholder}
             secureTextEntry={!visible}
           />
