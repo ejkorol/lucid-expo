@@ -4,12 +4,14 @@ import api from "@/lib/api";
 export interface ISignup {
   email: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   password: string;
   mbti: string;
   dobDate: string;
   dobTime: string;
-  dobLocation: string;
+  birthCountry: string;
+  birthState: string;
+  birthCity: string;
 }
 
 export interface ISignin {
