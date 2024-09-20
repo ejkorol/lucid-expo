@@ -9,6 +9,7 @@ import useLocations from "@/hooks/useLocations";
 import useMbtis, { Mbti } from "@/hooks/useMbtis";
 import { ICity, ICountry, IState } from "@/lib/api";
 import { signup } from "@/auth/auth";
+import { format } from "date-fns";
 
 const Credentials = () => {
   const router = useRouter();
@@ -28,33 +29,31 @@ const Credentials = () => {
   const [city, setCity] = useState("");
   const [mbti, setMbti] = useState("");
 
-  const saveState = () => {
-    dispatch(
-      updateSignup({
+  const handleSubmit = async () => {
+    try {
+      const updatedSignupData = {
         birthDate: date?.toISOString(),
         birthTime: time?.toISOString(),
         birthCountry: country,
         birthState: state,
         birthCity: city,
-        mbti,
-      }),
-    );
-  };
+        mbti: mbti,
+      };
 
-  const handleSubmit = async () => {
-    try {
+      dispatch(updateSignup(updatedSignupData));
+
       await signup({
         email: signupData.email,
         firstName: signupData.firstName,
         lastName: signupData.lastName,
         password: signupData.password,
-        mbti: signupData.mbti,
-        dobDate: signupData.birthDate,
-        dobTime: signupData.birthTime,
-        dobLocation: signupData.birthCity,
+        mbti: updatedSignupData.mbti,
+        dobDate: updatedSignupData.birthDate as string,
+        dobTime: updatedSignupData.birthTime as string,
+        birthCountry: updatedSignupData.birthCountry,
+        birthState: updatedSignupData.birthState,
+        birthCity: updatedSignupData.birthCity,
       });
-      saveState();
-      console.log(signupData);
     } catch (e) {
       console.error(`An error occured at the signup page: ${e}`);
     }
