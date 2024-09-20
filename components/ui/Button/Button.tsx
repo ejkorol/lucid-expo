@@ -15,6 +15,7 @@ interface ButtonProps {
   styles?: string;
   variant?: Variant;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const BASE_STYLES = {
@@ -25,13 +26,16 @@ const COLOR_STYLES = {
   primary: {
     container: "bg-primary",
     text: "font-roboto tracking-tighter font-medium text-[#ffffff]",
+    containerDisabled: "bg-[#819CE5]",
   },
   secondary: {
     container: "bg-[#ffffff] border-[1.6px] border-[#2962FF]",
     text: "font-roboto tracking-tighter font-medium text-[#2962FF]",
+    containerDisabled: "",
   },
   none: {
     container: "bg-[#ffffff]",
+    containerDisabled: "",
     text: "font-roboto tracking-tighter font-medium text-[#212121]",
   },
 };
@@ -63,6 +67,7 @@ const Button = ({
   styles = "",
   variant = "primary",
   onClick,
+  disabled = false,
 }: ButtonProps) => {
   const colorStyles = COLOR_STYLES[color];
   const sizeStyles = SIZE_STYLES[size];
@@ -78,6 +83,7 @@ const Button = ({
     case true:
       return (
         <TouchableOpacity
+          disabled={disabled}
           onPress={handleClick}
           className={`${colorStyles.container} ${variantStyles} ${radiusStyles} ${styles}`}
         >
@@ -88,8 +94,13 @@ const Button = ({
     default:
       return (
         <TouchableOpacity
+          disabled={disabled}
           onPress={handleClick}
-          className={`${BASE_STYLES.container} ${colorStyles.container} ${sizeStyles} ${radiusStyles} ${styles}`}
+          className={
+            disabled
+              ? `${BASE_STYLES.container} ${colorStyles.containerDisabled} ${sizeStyles} ${radiusStyles} ${styles}`
+              : `${BASE_STYLES.container} ${colorStyles.container} ${sizeStyles} ${radiusStyles} ${styles}`
+          }
         >
           <Text className={`${colorStyles.text}`}>{children}</Text>
         </TouchableOpacity>
