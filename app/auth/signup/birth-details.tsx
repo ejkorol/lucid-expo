@@ -2,12 +2,23 @@ import { useState } from "react";
 import { useRouter } from "expo-router";
 import { KeyboardAvoidingView, SafeAreaView, View, Text } from "react-native";
 import { Label, Input, Button } from "@/components/ui";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSignup } from "@/redux/slices/signupSlice";
+import { RootState } from "@/redux/store";
 
 const BirthDetails = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const firstName = useSelector((state: RootState) => state.signup.firstName);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const saveAndContinue = (): void => {
+    dispatch(updateSignup({ email, password, confirmPassword }));
+    router.push("/auth/signup/credentials");
+  };
 
   return (
     <SafeAreaView className="bg-[#ffffff] h-full">
@@ -23,7 +34,7 @@ const BirthDetails = () => {
                 You're doing great,
               </Text>
               <Text className="font-medium text-3xl tracking-tighter text-[#212121]">
-                Jane
+                {firstName}
               </Text>
               <Text className="mt-4 text-xs text-[#757575]">
                 You’ll need an email to log back in.
@@ -68,7 +79,7 @@ const BirthDetails = () => {
               styles="mt-8"
               radius="full"
               size="lg"
-              onClick={() => router.push("/auth/signup/credentials")}
+              onClick={saveAndContinue}
             >
               Continue
             </Button>

@@ -2,22 +2,63 @@ import { useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { KeyboardAvoidingView, SafeAreaView, View, Text } from "react-native";
 import { Label, Button, Picker } from "@/components/ui";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { updateSignup } from "@/redux/slices/signupSlice";
+import useLocations from "@/hooks/useLocations";
+import useMbtis, { Mbti } from "@/hooks/useMbtis";
+import { ICity, ICountry, IState } from "@/lib/api";
+import { signup } from "@/auth/auth";
 
 const Credentials = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const signupData = useSelector((state: RootState) => state.signup);
+
+  const { countries, states, cities, fetchStates, fetchCities } =
+    useLocations();
+
+  const { mbtis } = useMbtis();
 
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<Date | undefined>(undefined);
-
-  const COUNTRIES = ["Canada", "Japan", "Khazakstan"];
-  const CITIES = ["Toronto", "Vancouver"];
-  const STATES = ["Ontario", "Quebec"];
-  const MBTIS = ["INTJ", "INFJ"];
 
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [mbti, setMbti] = useState("");
+
+  const saveState = () => {
+    dispatch(
+      updateSignup({
+        birthDate: date?.toISOString(),
+        birthTime: time?.toISOString(),
+        birthCountry: country,
+        birthState: state,
+        birthCity: city,
+        mbti,
+      }),
+    );
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await signup({
+        email: signupData.email,
+        firstName: signupData.firstName,
+        lastName: signupData.lastName,
+        password: signupData.password,
+        mbti: signupData.mbti,
+        dobDate: signupData.birthDate,
+        dobTime: signupData.birthTime,
+        dobLocation: signupData.birthCity,
+      });
+      saveState();
+      console.log(signupData);
+    } catch (e) {
+      console.error(`An error occured at the signup page: ${e}`);
+    }
+  };
 
   return (
     <SafeAreaView className="bg-[#ffffff] h-full">
@@ -71,9 +112,10 @@ const Credentials = () => {
                   type="picker"
                   value={country}
                   setValue={setCountry}
-                  items={COUNTRIES}
+                  items={countries as ICountry[]}
                   placeholder="Country of birth*"
                   label="Select a country"
+                  callback={() => fetchStates(country)}
                 />
 
                 {/* state of birth */}
@@ -82,9 +124,10 @@ const Credentials = () => {
                   type="picker"
                   value={state}
                   setValue={setState}
-                  items={STATES}
+                  items={states as IState[]}
                   placeholder="State of birth*"
                   label="Select a state"
+                  callback={() => fetchCities(state)}
                 />
 
                 {/* city of birth */}
@@ -93,7 +136,7 @@ const Credentials = () => {
                   type="picker"
                   value={city}
                   setValue={setCity}
-                  items={CITIES}
+                  items={cities as ICity[]}
                   placeholder="City of birth*"
                   label="Select a city"
                 />
@@ -104,7 +147,7 @@ const Credentials = () => {
                   type="picker"
                   value={mbti}
                   setValue={setMbti}
-                  items={MBTIS}
+                  items={mbtis as Mbti[]}
                   placeholder="MBTI"
                   label="Select your MBTI"
                 />
@@ -123,7 +166,7 @@ const Credentials = () => {
               styles="mt-8"
               radius="full"
               size="lg"
-              onClick={() => router.push("/auth/signup/credentials")}
+              onClick={handleSubmit}
             >
               Continue
             </Button>

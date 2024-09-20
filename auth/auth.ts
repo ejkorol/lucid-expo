@@ -2,7 +2,6 @@ import * as SecureStore from "expo-secure-store";
 import api from "@/lib/api";
 
 export interface ISignup {
-  username: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -11,38 +10,38 @@ export interface ISignup {
   dobDate: string;
   dobTime: string;
   dobLocation: string;
-};
+}
 
 export interface ISignin {
   email: string;
   password: string;
-};
+}
 
 const setToken = async (token: string) => {
   try {
-    await SecureStore.setItemAsync('token', token);
+    await SecureStore.setItemAsync("token", token);
     return token;
-  } catch(e) {
+  } catch (e) {
     console.error(`An error occured setting the token: ${e}`);
-  };
+  }
 };
 
 const deleteToken = async () => {
   try {
-    await SecureStore.deleteItemAsync('token');
+    await SecureStore.deleteItemAsync("token");
     return true;
-  } catch(e) {
+  } catch (e) {
     console.error(`An error occured deleting the token: ${e}`);
-  };
+  }
 };
 
 export const getToken = async () => {
   try {
-    const token = await SecureStore.getItemAsync('token')
+    const token = await SecureStore.getItemAsync("token");
     return token;
-  } catch(e) {
+  } catch (e) {
     console.error(`An error occured getting the token: ${e}`);
-  };
+  }
 };
 
 export const signin = async ({ email, password }: ISignin) => {
@@ -55,9 +54,9 @@ export const signin = async ({ email, password }: ISignin) => {
     }
 
     return false;
-  } catch(e) {
+  } catch (e) {
     console.error(`An error occured at signin: ${e}`);
-  };
+  }
 };
 
 export const signup = async (credentials: ISignup) => {
@@ -70,24 +69,24 @@ export const signup = async (credentials: ISignup) => {
     }
 
     return false;
-  } catch(e) {
+  } catch (e) {
     console.error`An error occured at signup: ${e}`;
-  };
+  }
 };
 
 export const signout = async () => {
   try {
     await deleteToken();
-  } catch(e) {
+  } catch (e) {
     console.error(`An error occured at signout: ${e}`);
-  };
+  }
 };
 
 export const verify = async (credentials: string) => {
   try {
     const res = await api.verify(credentials);
     return res;
-  } catch(e) {
+  } catch (e) {
     console.error(`An error occured at verify: ${e}`);
-  };
+  }
 };
