@@ -14,14 +14,20 @@ import { format } from "date-fns";
 
 type Type = "date" | "time" | "picker";
 
+interface Item {
+  displayValue: string;
+  value: string;
+}
+
 interface PickerProps {
   placeholder?: string;
-  value: Date | string | undefined;
+  value: any;
   setValue: (value: any) => void;
   type: Type;
   style?: string;
-  items?: any[];
+  items?: Item[];
   label?: string;
+  callback?: () => void;
 }
 
 const BASE_STYLES = {
@@ -40,6 +46,7 @@ const Picker = ({
   style = "",
   items = [],
   label = "label",
+  callback,
 }: PickerProps) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -54,31 +61,33 @@ const Picker = ({
     pickerModalRef.current?.present();
   }, []);
 
-  const handleModalClose = useCallback(() => {
+  const handleModalClose = () => {
     pickerModalRef.current?.close();
-  }, []);
+    if (callback) callback();
+  };
 
-  const renderBackdrop = useCallback(
-    (props: any) => (
-      <BottomSheetBackdrop
-        {...props}
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-        opacity={0.18}
-      />
-    ),
-    [],
+  const renderBackdrop = (props: any) => (
+    <BottomSheetBackdrop
+      {...props}
+      appearsOnIndex={0}
+      disappearsOnIndex={-1}
+      opacity={0.18}
+      pressBehavior="none"
+    />
   );
 
-  const renderFooter = useCallback(
-    () => (
-      <View className="w-full flex items-center justify-center border-t-[1px] border-[#E0E0E0]">
-        <View className="h-full my-auto py-2">
-          <Button title="Confirm" onPress={handleModalClose} />
-        </View>
+  const renderFooter = () => (
+    <View className="w-full flex items-center justify-center border-t-[1px] border-[#E0E0E0]">
+      <View className="h-full my-auto py-2">
+        <Button
+          title="Confirm"
+          onPress={() => {
+            handleModalClose();
+            if (callback) callback();
+          }}
+        />
       </View>
-    ),
-    [],
+    </View>
   );
 
   const handleInputPress = () => {
@@ -204,11 +213,17 @@ const Picker = ({
                 selectedValue={selectedItem}
                 onValueChange={(item) => {
                   setSelectedItem(item);
+                  setValue(item);
                 }}
               >
-                {items.map((item, idx) => (
-                  <NativePicker.Item key={idx} value={item} label={item} />
-                ))}
+                {items &&
+                  items.map((item, idx) => (
+                    <NativePicker.Item
+                      key={idx}
+                      value={item.displayValue}
+                      label={item.displayValue}
+                    />
+                  ))}
               </NativePicker>
             </BottomSheetView>
           </BottomSheetModal>
