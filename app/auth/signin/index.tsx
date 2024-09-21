@@ -5,11 +5,24 @@ import { Image } from "expo-image";
 import { Label, Input, Button } from "@/components/ui";
 import moonLogo from "@/assets/images/moon-logo-blue.svg";
 import { Link } from "expo-router";
+import { signin } from "@/auth/auth";
 
 const Signin = () => {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const signinController = async () => {
+    try {
+      const isSuccess = await signin({ email, password });
+      console.log(isSuccess);
+      if (isSuccess) {
+        router.replace("/(tabs)/dashboard/");
+      }
+    } catch (e) {
+      console.error(`An error occured at the Signin Screen: ${e}`);
+    }
+  };
 
   return (
     <SafeAreaView className="relative bg-[#ffffff] h-full">
@@ -27,7 +40,7 @@ const Signin = () => {
             <View>
               <Text className="font-medium text-2xl">Login</Text>
               <Text className="mt-4 text-xs text-[#757575]">
-                Welcome back, sleep head.
+                Welcome back, sleepy head.
               </Text>
             </View>
 
@@ -61,7 +74,12 @@ const Signin = () => {
                   </Link>
                 </View>
               </View>
-              <Button styles="mt-8" radius="full" size="lg">
+              <Button
+                styles="mt-8"
+                radius="full"
+                size="lg"
+                onClick={signinController}
+              >
                 Login
               </Button>
               <View className="mt-4">

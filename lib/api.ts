@@ -1,4 +1,4 @@
-import { ISignin, ISignup } from "@/utils/auth";
+import { ISignin, ISignup } from "@/auth/auth";
 
 class Api {
   private apiUrl: string;
@@ -45,15 +45,16 @@ class Api {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: credentials.username,
           email: credentials.email,
-          first_name: credentials.firstName,
-          last_name: credentials.lastName,
+          firstName: credentials.firstName,
+          lastName: credentials.lastName,
           password: credentials.password,
           mbti: credentials.mbti,
-          dob_date: credentials.dobDate,
-          dob_time: credentials.dobTime,
-          dob_location: credentials.dobLocation,
+          dobDate: credentials.dobDate,
+          dobTime: credentials.dobTime,
+          birthCountry: credentials.birthCountry,
+          birthState: credentials.birthState,
+          birthCity: credentials.birthCity,
         }),
       });
 

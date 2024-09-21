@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { KeyboardAvoidingView, SafeAreaView, View, Text } from "react-native";
 import { Label, Input, Button } from "@/components/ui";
@@ -8,6 +8,7 @@ import { updateSignup } from "@/redux/slices/signupSlice";
 const Signup = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [isProgressable, setIsProgressable] = useState<boolean>(false);
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
 
@@ -15,6 +16,10 @@ const Signup = () => {
     dispatch(updateSignup({ firstName, lastName }));
     router.push("/auth/signup/birth-details");
   };
+
+  useEffect(() => {
+    firstName === "" ? setIsProgressable(false) : setIsProgressable(true);
+  }, [firstName, lastName]);
 
   return (
     <SafeAreaView className="bg-[#ffffff] h-full">
@@ -59,6 +64,7 @@ const Signup = () => {
               styles="mt-8"
               radius="full"
               size="lg"
+              disabled={!isProgressable}
               onClick={saveAndContinue}
             >
               Continue

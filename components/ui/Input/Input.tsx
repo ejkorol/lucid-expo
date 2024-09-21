@@ -14,12 +14,14 @@ interface InputProps {
   size?: Size;
   radius?: Radius;
   type?: Type;
+  error?: boolean;
 }
 
 const BASE_STYLE = {
   container: "bg-[#EEEEEE] border-[1px] border-[#E0E0E0]",
   text: "font-inter text-base text-[#BDBDBD]",
   active: "bg-[#EEEEEE] border-[1px] border-[#2962FF]",
+  error: "bg-[#EEEEEE] border-[1px] border-[#FF2929]",
 };
 
 const SIZE_STYLE = {
@@ -42,6 +44,7 @@ const Input = ({
   size = "md",
   radius = "md",
   type = "text",
+  error = false,
 }: InputProps) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -54,9 +57,11 @@ const Input = ({
       return (
         <View
           className={
-            isFocused
-              ? `${BASE_STYLE.active} ${radiusStyle} ${style}`
-              : `${BASE_STYLE.container} ${radiusStyle} ${style}`
+            error
+              ? `${BASE_STYLE.error} ${radiusStyle} ${style}`
+              : isFocused
+                ? `${BASE_STYLE.active} ${radiusStyle} ${style}`
+                : `${BASE_STYLE.container} ${radiusStyle} ${style}`
           }
         >
           <TextInput
@@ -74,9 +79,11 @@ const Input = ({
       return (
         <View
           className={
-            isFocused
-              ? `${BASE_STYLE.active} ${radiusStyle} ${style} relative items-center flex-row justify-between`
-              : `${BASE_STYLE.container} ${radiusStyle} ${style} relative items-center flex-row justify-between`
+            error
+              ? `${BASE_STYLE.error} ${radiusStyle} ${style} relative items-center flex-row justify-between`
+              : isFocused
+                ? `${BASE_STYLE.active} ${radiusStyle} ${style} relative items-center flex-row justify-between`
+                : `${BASE_STYLE.container} ${radiusStyle} ${style} relative items-center flex-row justify-between`
           }
         >
           <TextInput

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { KeyboardAvoidingView, SafeAreaView, View, Text } from "react-native";
 import { Label, Input, Button } from "@/components/ui";
@@ -11,9 +11,43 @@ const BirthDetails = () => {
   const dispatch = useDispatch();
 
   const firstName = useSelector((state: RootState) => state.signup.firstName);
+
+  const [isProgressable, setIsProgressable] = useState<boolean>(false);
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
+  const [isPasswordsValid, setIsPasswordsValid] = useState<boolean>(false);
+
+  const validateEmail = (input: string) => {
+    const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(input);
+  };
+
+  useEffect(() => {
+    if (email === "") {
+      setIsEmailValid(true);
+      setIsProgressable(false);
+    } else {
+      const emailValid = validateEmail(email);
+      setIsEmailValid(emailValid);
+
+      if (!emailValid) {
+        setIsProgressable(false);
+      } else if (password === "" && confirmPassword === "") {
+        setIsPasswordsValid(true);
+        setIsProgressable(true);
+      } else if (password !== confirmPassword) {
+        setIsPasswordsValid(false);
+        setIsProgressable(false);
+      } else {
+        setIsPasswordsValid(true);
+        setIsProgressable(true);
+      }
+    }
+  }, [email, password, confirmPassword]);
 
   const saveAndContinue = (): void => {
     dispatch(updateSignup({ email, password, confirmPassword }));
@@ -48,6 +82,7 @@ const BirthDetails = () => {
                 <Input
                   placeholder="janedoe@example.com"
                   value={email}
+                  error={!isEmailValid}
                   onChangeText={setEmail}
                 />
               </View>
@@ -59,6 +94,7 @@ const BirthDetails = () => {
                   placeholder="* * * * * * * *"
                   type="password"
                   value={password}
+                  error={!isPasswordsValid}
                   onChangeText={setPassword}
                 />
               </View>
@@ -71,6 +107,7 @@ const BirthDetails = () => {
                   placeholder="* * * * * * * *"
                   type="password"
                   value={confirmPassword}
+                  error={!isPasswordsValid}
                   onChangeText={setConfirmPassword}
                 />
               </View>
@@ -80,6 +117,7 @@ const BirthDetails = () => {
               radius="full"
               size="lg"
               onClick={saveAndContinue}
+              disabled={!isProgressable}
             >
               Continue
             </Button>

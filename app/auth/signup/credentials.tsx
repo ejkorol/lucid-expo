@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { KeyboardAvoidingView, SafeAreaView, View, Text } from "react-native";
 import { Label, Button, Picker } from "@/components/ui";
@@ -23,38 +23,57 @@ const Credentials = () => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<Date | undefined>(undefined);
 
+  const [isProgressable, setIsProgressable] = useState<boolean>(false);
+
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [mbti, setMbti] = useState("");
 
-  const saveState = () => {
-    dispatch(
-      updateSignup({
+  useEffect(() => {
+    if (
+      !date ||
+      !time ||
+      country === "" ||
+      state === "" ||
+      city === "" ||
+      mbti === ""
+    ) {
+      setIsProgressable(false);
+    } else {
+      setIsProgressable(true);
+    }
+  }, [date, time, country, state, city, mbti]);
+
+  const handleSubmit = async () => {
+    try {
+      const updatedSignupData = {
         birthDate: date?.toISOString(),
         birthTime: time?.toISOString(),
         birthCountry: country,
         birthState: state,
         birthCity: city,
-        mbti,
-      }),
-    );
-  };
+        mbti: mbti,
+      };
 
-  const handleSubmit = async () => {
-    try {
-      await signup({
+      dispatch(updateSignup(updatedSignupData));
+
+      const isSuccess = await signup({
         email: signupData.email,
         firstName: signupData.firstName,
         lastName: signupData.lastName,
         password: signupData.password,
-        mbti: signupData.mbti,
-        dobDate: signupData.birthDate,
-        dobTime: signupData.birthTime,
-        dobLocation: signupData.birthCity,
+        mbti: updatedSignupData.mbti,
+        dobDate: updatedSignupData.birthDate as string,
+        dobTime: updatedSignupData.birthTime as string,
+        birthCountry: updatedSignupData.birthCountry,
+        birthState: updatedSignupData.birthState,
+        birthCity: updatedSignupData.birthCity,
       });
-      saveState();
-      console.log(signupData);
+
+      if (isSuccess) {
+        router.replace("/(tabs)/dashboard");
+      }
     } catch (e) {
       console.error(`An error occured at the signup page: ${e}`);
     }
@@ -167,6 +186,7 @@ const Credentials = () => {
               radius="full"
               size="lg"
               onClick={handleSubmit}
+              disabled={!isProgressable}
             >
               Continue
             </Button>
