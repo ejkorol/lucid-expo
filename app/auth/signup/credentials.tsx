@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useRouter } from "expo-router";
 import { KeyboardAvoidingView, SafeAreaView, View, Text } from "react-native";
 import { Label, Button, Picker } from "@/components/ui";
@@ -9,7 +9,6 @@ import useLocations from "@/hooks/useLocations";
 import useMbtis, { Mbti } from "@/hooks/useMbtis";
 import { ICity, ICountry, IState } from "@/lib/api";
 import { signup } from "@/auth/auth";
-import { format } from "date-fns";
 
 const Credentials = () => {
   const router = useRouter();
@@ -24,10 +23,27 @@ const Credentials = () => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<Date | undefined>(undefined);
 
+  const [isProgressable, setIsProgressable] = useState<boolean>(false);
+
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [mbti, setMbti] = useState("");
+
+  useEffect(() => {
+    if (
+      !date ||
+      !time ||
+      country === "" ||
+      state === "" ||
+      city === "" ||
+      mbti === ""
+    ) {
+      setIsProgressable(false);
+    } else {
+      setIsProgressable(true);
+    }
+  }, [date, time, country, state, city, mbti]);
 
   const handleSubmit = async () => {
     try {
@@ -42,7 +58,7 @@ const Credentials = () => {
 
       dispatch(updateSignup(updatedSignupData));
 
-      await signup({
+      const isSuccess = await signup({
         email: signupData.email,
         firstName: signupData.firstName,
         lastName: signupData.lastName,
@@ -54,6 +70,10 @@ const Credentials = () => {
         birthState: updatedSignupData.birthState,
         birthCity: updatedSignupData.birthCity,
       });
+
+      if (isSuccess) {
+        router.replace("/(tabs)/dashboard");
+      }
     } catch (e) {
       console.error(`An error occured at the signup page: ${e}`);
     }
@@ -166,6 +186,7 @@ const Credentials = () => {
               radius="full"
               size="lg"
               onClick={handleSubmit}
+              disabled={!isProgressable}
             >
               Continue
             </Button>
